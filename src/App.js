@@ -1,25 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import TodoList from "./TodoList";
+import TodoItem from "./TodoItem";
+import TodoItemClass from "./TodoItemClass";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends React.Component {
+  state = {
+    todos: [
+      { id: 1, title: "react", done: false },
+      { id: 2, title: "angular", done: true },
+      { id: 3, title: "vue", done: false },
+    ],
+    title: "Todo title",
+    // inputValue: "",
+  };
+  addTodo = (inputValuePassed) => {
+    const todos = this.state.todos;
+    const todo = {
+      id: Date.now(),
+      title: inputValuePassed,
+      done: false,
+    };
+    todos.push(todo);
+    this.setState({ todos });
+  };
+
+  handleSubmit = (a) => {
+    // a.preventDefault();
+    // console.log(a);
+    this.addTodo();
+    // this.setState({ inputValue: "" });
+  };
+  handleChange = (a) => {
+    this.setState({ inputValue: a.target.value });
+    console.log(a.target.value);
+  };
+  render() {
+    return (
+      <div className="App">
+        <h1>{this.state.title}</h1>
+        <TodoItem b={this.addTodo} />
+        <TodoItemClass b={this.addTodo} />
+        <TodoList x={this.state.todos} />
+      </div>
+    );
+  }
 }
 
-export default App;
+// const todosItem = this.state.todos.map((el, index)=>{
+//   return (
+//     <li key={index}>
+//       {el.title},
+//       {el.id}
+//     </li>
+//   )
+// })
